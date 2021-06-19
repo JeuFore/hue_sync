@@ -23,7 +23,7 @@ module.exports = function Lights(mqttClient) {
                 y: stateReq.xy[1]
             }
         }
-        if (stateReq.on) {
+        if (stateReq.on === false || stateReq.on === true) {
             response.push({ "success": { "/lights/1/state/on": stateReq.on } })
             value.state = stateReq.on ? 'ON' : 'OFF'
         }
