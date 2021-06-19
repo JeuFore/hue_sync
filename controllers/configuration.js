@@ -2,19 +2,18 @@ const { v4 } = require('uuid');
 const fs = require('fs');
 
 const lights = require('../config/lights')
+const groups = require('../config/groups')
 
 module.exports = function Configuration() {
     async function createUser(req, res) {
         const { devicetype, generateclientkey } = req.body
 
-        console.log(req.body)
-
         if (!devicetype)
             return res.status(400).json({ type: 'error' })
 
-        const username = '6cbbe260-7ec3-4456-85c2-935ff251f4fe' || v4();
+        const username = v4();
 
-        console.log(devicetype, generateclientkey)
+        const clientkey = generateclientkey ? v4() : undefined
 
         let authUsers = JSON.parse(fs.readFileSync(__dirname + '/../users/authUsers.json'));
 
@@ -27,7 +26,7 @@ module.exports = function Configuration() {
         fs.writeFileSync(__dirname + '/../users/authUsers.json', JSON.stringify(authUsers))
 
         res.status(200).send([{
-            "success": { username: '6cbbe260-7ec3-4456-85c2-935ff251f4fe', clientkey: '4A3BFA48908942A68DD494747A4B4DD6' }
+            "success": { username, clientkey }
         }])
     }
 
@@ -113,26 +112,19 @@ module.exports = function Configuration() {
     async function modifyConfig(req, res) {
         const { name } = req.body
 
-        console.log(req.body)
-
         let authUsers = JSON.parse(fs.readFileSync(__dirname + '/../users/authUsers.json'));
 
         if (name) {
-
             if (!authUsers[req.params.username])
                 return res.status(400).json({ type: 'error' })
 
             authUsers[req.params.username] = { name }
 
             fs.writeFileSync(__dirname + '/../users/authUsers.json', JSON.stringify(authUsers))
+            return res.status(200).send([{ success: { "/config/name": authUsers[req.params.username].name } }])
         }
 
-
-        return res.status(500).json({
-            "message": "Internal Server Error"
-        })
-
-        return res.status(200).send([{ success: { "/config/name": authUsers[req.params.username].name } }])
+        return res.status(200).send("")
     }
 
     async function getDataStore(req, res) {
@@ -218,31 +210,7 @@ module.exports = function Configuration() {
                 }
             },
             "lights": lights,
-            "groups": {
-                "1": {
-                    "name": "Group 1",
-                    "lights": [
-                        "1",
-                        "2",
-                        "3"
-                    ],
-                    "type": "LightGroup",
-                    "action": {
-                        "on": true,
-                        "bri": 254,
-                        "hue": 10000,
-                        "sat": 254,
-                        "effect": "none",
-                        "xy": [
-                            0.5,
-                            0.5
-                        ],
-                        "ct": 250,
-                        "alert": "select",
-                        "colormode": "ct"
-                    }
-                }
-            },
+            "groups": groups,
             "scenes": {
 
             },
