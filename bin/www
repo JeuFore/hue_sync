@@ -7,12 +7,13 @@
 var app = require('../app');
 var debug = require('debug');
 var http = require('http');
+var selfsigned = require('selfsigned');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = 80;
+var port = normalizePort(process.env.HTTP_PORT || '80');
 app.set('port', port);
 
 /**
@@ -21,18 +22,19 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-const { generateCertificate } = require('hue-emu/dist/util/utils')
+/**
+ * Create HTTPS server.
+ */
 
-let certificateDefinition = generateCertificate();
+const certificateDefinition = generateCertificate();
 
-
-app.set('port', 443);
+app.set('port', normalizePort(process.env.HTTPS_PORT || '443'));
 
 var https = require('https');
 https.createServer({
   cert: certificateDefinition.cert,
   key: certificateDefinition.private
-}, app).listen(443)
+}, app).listen(443);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -60,6 +62,18 @@ function normalizePort(val) {
   }
 
   return false;
+}
+
+/**
+ *  Generate HTTPS certifcate
+ */
+
+function generateCertificate() {
+  return selfsigned.generate([
+    { name: 'commonName', value: 'hue_sync' },
+    { name: 'organizationName', value: 'hue-hue_sync' },
+    { name: 'countryName', value: 'FR' }
+  ], { keySize: 2048, clientCertificate: false, algorithm: 'sha256' });
 }
 
 /**
