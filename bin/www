@@ -28,13 +28,14 @@ var server = http.createServer(app);
 
 const certificateDefinition = generateCertificate();
 
-app.set('port', normalizePort(process.env.HTTPS_PORT || '443'));
+var https_port = normalizePort(process.env.HTTPS_PORT || '443')
+app.set('port', https_port);
 
 var https = require('https');
 https.createServer({
   cert: certificateDefinition.cert,
   key: certificateDefinition.private
-}, app).listen(443);
+}, app).listen(https_port);
 
 /**
  * Listen on provided port, on all network interfaces.
