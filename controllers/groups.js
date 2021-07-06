@@ -13,6 +13,11 @@ module.exports = function Groups() {
         ])
     }
 
+    async function createGroup(req, res) {
+        console.log(req.body)
+        res.status(200).json([{ "success": { "id": "1" } }])
+    }
+
     async function getGroups(req, res) {
         res.status(200).json(groups)
     }
@@ -20,6 +25,7 @@ module.exports = function Groups() {
     return Object.freeze({
         getGroup,
         setGroup,
-        getGroups
+        getGroups,
+        createGroup
     });
 }

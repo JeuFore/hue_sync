@@ -1,11 +1,13 @@
 module.exports = {
     "1": {
-        "name": "Group 1",
+        "name": "Chambre",
         "lights": [
             "1",
-            "2"
+            "2",
+            "3"
         ],
-        "type": "LightGroup",
+        "type": "Room",
+        "class": "Bedroom",
         "action": {
             "on": true,
             "bri": 254,

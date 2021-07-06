@@ -7,7 +7,7 @@ require('dotenv').config();
 var app = express();
 
 app.use((req, res, next) => {
-    if (['http://localhost:8090'].includes(req.headers.origin))
+    if (process.env.ALLOWED_ORIGINS.includes(req.headers.origin))
         res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
     res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT')
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-Websocket-User-Id, X-User-Language, Content-Type, Accept, Authorization');

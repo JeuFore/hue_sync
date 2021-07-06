@@ -35,76 +35,35 @@ module.exports = function Configuration() {
         date.setHours(date.getHours() + 2)
 
         res.status(200).json({
-            "backup": {
-                "errorcode": 0,
-                "status": "idle"
-            },
-            "datastoreversion": "103",
+            "name": "Philips hue",
+            "zigbeechannel": 15,
+            "mac": "00:17:88:00:00:00",
             "dhcp": true,
-            "factorynew": false,
-            "internetservices": {
-                "internet": "disconnected",
-                "remoteaccess": "disconnected",
-                "swupdate": "disconnected",
-                "time": "disconnected"
-            },
-            "linkbutton": false,
-            "modelid": "BSB002",
-            "portalconnection": "disconnected",
-            "portalservices": false,
-            "portalstate": {
-                "communication": "disconnected",
-                "incoming": false,
-                "outgoing": false,
-                "signedon": false
-            },
-            "proxyaddress": "none",
-            "proxyport": 0,
-            "replacesbridgeid": null,
-            "swupdate": {
-                "checkforupdate": false,
-                "devicetypes": {
-                    "bridge": false,
-                    "lights": [],
-                    "sensors": []
-                },
-                "notify": true,
-                "text": "",
-                "updatestate": 0,
-                "url": ""
-            },
-            "swupdate2": {
-                "autoinstall": {
-                    "on": true,
-                    "updatetime": "T14:00:00"
-                },
-                "bridge": {
-                    "lastinstall": "2020-12-11T17:08:55",
-                    "state": "noupdates"
-                },
-                "checkforupdate": false,
-                "lastchange": "2020-12-13T10:30:15",
-                "state": "unknown"
-            },
-            "zigbeechannel": 25,
-            "Remote API enabled": false,
-            "apiversion": "1.44.0",
-            "bridgeid": "542696FFFEE02D09",
             "ipaddress": "192.168.1.10",
             "netmask": "255.255.255.0",
             "gateway": "192.168.1.1",
-            "mac": "54:26:96:e0:2d:09",
-            "name": "Philips hue",
-            "swversion": "1945091050",
-            "timezone": "Europe/Paris",
+            "proxyaddress": "none",
+            "proxyport": 0,
             "UTC": new Date().toISOString(),
             "localtime": date.toISOString(),
-            "whitelist": {
-                "4ac4cac2d05f11eb81f20242ac110002": {
-                    "create date": "2021-06-18T18:00:30",
-                    "last use date": "2021-06-18T18:00:30",
-                    "name": "Hue Beta#Mi 9T"
-                }
+            "timezone": "Europe/Paris",
+            "whitelist": JSON.parse(fs.readFileSync(__dirname + '/../users/authUsers.json')),
+            "swversion": "1945091050",
+            "apiversion": "1.44.0",
+            "swupdate": {
+                "updatestate": 0,
+                "url": "",
+                "text": "",
+                "notify": false
+            },
+            "linkbutton": false,
+            "portalservices": false,
+            "portalconnection": "connected",
+            "portalstate": {
+                "signedon": true,
+                "incoming": false,
+                "outgoing": true,
+                "communication": "disconnected"
             }
         })
     }
@@ -189,25 +148,18 @@ module.exports = function Configuration() {
                     "state": "unknown"
                 },
                 "zigbeechannel": 25,
-                "Remote API enabled": false,
                 "apiversion": "1.44.0",
                 "bridgeid": "542696FFFEE02D09",
                 "ipaddress": "192.168.1.10",
                 "netmask": "255.255.255.0",
                 "gateway": "192.168.1.1",
-                "mac": "54:26:96:e0:2d:09",
+                "mac": "00:17:88:00:00:00",
                 "name": " Philips hue",
                 "swversion": "1945091050",
                 "timezone": "Europe/Paris",
                 "UTC": new Date().toISOString(),
                 "localtime": date.toISOString(),
-                "whitelist": {
-                    "6cbbe260-7ec3-4456-85c2-935ff251f4fe": {
-                        "create date": "2021-06-18T18:00:30",
-                        "last use date": "2021-06-18T18:00:30",
-                        "name": "Hue Beta#Mi 9T"
-                    }
-                }
+                "whitelist": JSON.parse(fs.readFileSync(__dirname + '/../users/authUsers.json')),
             },
             "lights": lights,
             "groups": groups,
@@ -229,17 +181,23 @@ module.exports = function Configuration() {
     }
 
     async function getConfig(req, res) {
+        let date = new Date()
+        date.setHours(date.getHours() + 2)
+
         return res.status(200).json({
+            "zigbeechannel": 25,
+            "Remote API enabled": false,
             "apiversion": "1.44.0",
             "bridgeid": "542696FFFEE02D09",
-            "datastoreversion": "103",
-            "factorynew": false,
-            "mac": "54:26:96:e0:2d:09",
-            "modelid": "BSB002",
-            "name": "Philips hue",
-            "replacesbridgeid": null,
-            "starterkitid": "",
-            "swversion": "1945091050"
+            "ipaddress": "192.168.1.10",
+            "netmask": "255.255.255.0",
+            "gateway": "192.168.1.1",
+            "mac": "00:17:88:00:00:00",
+            "name": " Philips hue",
+            "swversion": "1945091050",
+            "timezone": "Europe/Paris",
+            "UTC": new Date().toISOString(),
+            "localtime": date.toISOString()
         })
     }
 

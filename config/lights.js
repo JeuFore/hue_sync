@@ -57,14 +57,16 @@ module.exports = {
     },
     "3": {
         "state": {
+            "hue": 50000,
             "on": true,
-            "xy": [
-                0.5,
-                0.5
-            ],
-            "colormode": "xy",
-            "mode": "homeautomation",
-            "reachable": true
+            "effect": "none",
+            "alert": "none",
+            "bri": 200,
+            "sat": 200,
+            "ct": 500,
+            "xy": [0.5, 0.5],
+            "reachable": true,
+            "colormode": "hs"
         },
         "swupdate": {
             "state": "noupdates",
@@ -72,11 +74,11 @@ module.exports = {
         },
         "type": "Router",
         "name": "Hue play 3",
-        "modelid": "915005733701",
+        "modelid": "440400982841",
         "manufacturername": "Philips",
         "productname": "Hue Play",
         "config": {
-            "archetype": "sultanbulb",
+            "archetype": "hueplay",
             "function": "mixed",
             "direction": "omnidirectional"
         },
