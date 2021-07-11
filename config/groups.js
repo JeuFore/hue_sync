@@ -1,6 +1,6 @@
 module.exports = {
     "1": {
-        "name": "Chambre",
+        "name": "Bedroom",
         "lights": [
             "1",
             "2",
