@@ -197,7 +197,10 @@ module.exports = function Configuration() {
             "swversion": "1945091050",
             "timezone": "Europe/Paris",
             "UTC": new Date().toISOString(),
-            "localtime": date.toISOString()
+            "localtime": date.toISOString(),
+            "replacesbridgeid": null,
+            "starterkitid": "",
+            "modelid": "BSB002",
         })
     }
 

@@ -20,18 +20,22 @@ module.exports = function Lights(mqttClient) {
 
         if (typeof stateReq.on === 'boolean') {
             response.push({ "success": { [`/lights/${req.params.id}/state/on`]: stateReq.on } })
+            lights[req.params.id].state.on = stateReq.on
             value.state = stateReq.on ? 'ON' : 'OFF'
         }
         if (typeof stateReq.bri === 'number') {
             response.push({ "success": { [`/lights/${req.params.id}/state/bri`]: stateReq.bri } })
+            lights[req.params.id].state.bri = stateReq.bri
             value.brightness = stateReq.bri
         }
         if (typeof stateReq.hue === 'number') {
             response.push({ "success": { [`/lights/${req.params.id}/state/hue`]: stateReq.hue } })
+            lights[req.params.id].state.hue = stateReq.hue
             value.color = { hue: stateReq.hue }
         }
         if (typeof stateReq.sat === 'number') {
             response.push({ "success": { [`/lights/${req.params.id}/state/sat`]: stateReq.sat } })
+            lights[req.params.id].state.sat = stateReq.sat
             if (value.color)
                 value.color.saturation = stateReq.sat
             else
@@ -39,6 +43,7 @@ module.exports = function Lights(mqttClient) {
         }
         if (Array.isArray(stateReq.xy)) {
             response.push({ "success": { [`/lights/${req.params.id}/state/xy`]: stateReq.xy } })
+            lights[req.params.id].state.xy = stateReq.xy
             if (value.color) {
                 value.color.x = stateReq.xy[0]
                 value.color.y = stateReq.xy[1]
@@ -51,10 +56,12 @@ module.exports = function Lights(mqttClient) {
         }
         if (typeof stateReq.ct === 'number') {
             response.push({ "success": { [`/lights/${req.params.id}/state/ct`]: stateReq.ct } })
+            lights[req.params.id].state.ct = stateReq.ct
             value.color_temp = stateReq.ct
         }
         if (typeof stateReq.alert === 'string') {
             response.push({ "success": { [`/lights/${req.params.id}/state/alert`]: stateReq.alert } })
+            lights[req.params.id].alert = stateReq.alert
             switch (stateReq.alert) {
                 case 'select':
                     value.effect = 'okay'
@@ -69,6 +76,7 @@ module.exports = function Lights(mqttClient) {
         }
         if (typeof stateReq.effect === 'string') {
             response.push({ "success": { [`/lights/${req.params.id}/state/effect`]: stateReq.effect } })
+            lights[req.params.id].state.effect = stateReq.effect
             if (stateReq.effect === 'colorloop')
                 value.effect = 'channel_change'
             else

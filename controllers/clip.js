@@ -1,5 +1,6 @@
-module.exports = function Clip() {
+const lights = require('../config/lights')
 
+module.exports = function Clip() {
     async function getBridge(req, res) {
         res.status(200).json({
             "data": [
@@ -8,15 +9,7 @@ module.exports = function Clip() {
                     "id": "74465c96-d3c0-599a-b52f-91444eeef13d",
                     "id_v1": "",
                     "type": "bridge",
-                    "lights": [
-                        {
-                            type: 'light',
-                            id: 915005733701,
-                            dimming: {
-                                brightness: 10
-                            }
-                        }
-                    ]
+                    "lights": lights
                 }
             ],
             "errors": []
